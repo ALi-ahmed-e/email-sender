@@ -6,6 +6,9 @@
     "build": "cd backend && npm install  && cd ../frontend && npm install && npm run build",
     "start": "cd backend && npm run server"
   },
+  "engines": {
+    "node": ">=16"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
