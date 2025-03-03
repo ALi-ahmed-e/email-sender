@@ -78,6 +78,9 @@ function App() {
 
       <div className=' w-full p-20 dark:bg-gray-900  bg-gray-300' >
 
+
+
+
         <FileInp handlefile={handlefile} />
 
         <TExtArea submit={handleUpload} />
