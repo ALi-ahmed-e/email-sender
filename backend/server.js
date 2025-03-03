@@ -24,7 +24,6 @@ app.use(
 app.use(hpp())
 app.use(express.json({ limit: '100mb' }))
 app.use(cors({
-  origin: 'http://localhost:5173',
   methods: "GET,POST,PUT,DELETE",
   credentials: true,
 }))
