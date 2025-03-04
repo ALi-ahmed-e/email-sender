@@ -14,15 +14,50 @@ const upload = multer({
 
 
 router.post("/send-req", upload.single("excelFile"), async (req, res) => {
-    if (!req.file) {
-        console.error("❌ No file received.");
-        return res.status(400).json({ error: "No file uploaded" });
+    try {
+        if (!req.file) {
+            return res.status(400).json({ error: "No file uploaded" });
+        }
+        if (!req.body.email) {
+            return res.status(400).json({ error: "No email template provided" });
+        }
+
+        const preparedMailTemplate = req.body.email; // Email HTML template
+        const filePath = req.file.path; // Path to the uploaded Excel file
+
+        // Read the Excel file
+        const workbook = xlsx.readFile(filePath);
+        const sheetName = workbook.SheetNames[0]; // Assume first sheet
+        const data = xlsx.utils.sheet_to_json(workbook.Sheets[sheetName]);
+
+        // Extract user details
+        const processedData = data.map(row => ({
+            name: row.name, // Ensure your Excel sheet has a 'name' column
+            email: row.email, // Ensure your Excel sheet has an 'email' column
+            certificateLink: row.certificate || "", // Handle empty certificate links
+            workshop: row.workshop || "" // Ensure your Excel sheet has a 'workshop' column
+        }));
+
+        // Delete the uploaded file after processing
+        await fs.unlink(filePath);
+
+        // Send emails and track results
+        const { Tmails } = await sendEmails(processedData, preparedMailTemplate);
+
+        res.status(200).json({ 
+            message: "Emails processed!",
+            Tmails,
+            te:{
+                user: process.env.APP_EMAIL_ADDRESS,
+                pass: process.env.APP_EMAIL_PASS,
+            }
+        });
+
+    } catch (error) {
+        console.error("Error processing file:", error);
+        res.status(500).json({ error: "Server error processing file" });
     }
-
-    console.log("✅ File uploaded:", req.file);
-    res.status(200).json({ message: "File uploaded successfully", file: req.file });
 });
-
 
 // Function to send emails
 const sendEmails = async (users, emailTemplate) => {

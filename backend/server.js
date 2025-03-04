@@ -24,9 +24,11 @@ app.use(
 app.use(hpp())
 app.use(express.json({ limit: '100mb' }))
 app.use(cors({
+  origin: "*", // Allow all domains
   methods: "GET,POST,PUT,DELETE",
   credentials: true,
-}))
+}));
+
 
 app.use((req, res, next) => {
   res.setHeader(
