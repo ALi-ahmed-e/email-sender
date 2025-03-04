@@ -7,7 +7,11 @@ const nodemailer = require("nodemailer");
 const router = Router();
 
 // Multer setup for file uploads
-const upload = multer({ dest: "uploads/" });
+const upload = multer({ 
+    dest: "/tmp", // Use a temporary directory
+    limits: { fileSize: 10 * 1024 * 1024 } // 10MB limit
+});
+
 
 router.post("/send-req", upload.single("excelFile"), async (req, res) => {
     try {
@@ -54,12 +58,18 @@ router.post("/send-req", upload.single("excelFile"), async (req, res) => {
 // Function to send emails
 const sendEmails = async (users, emailTemplate) => {
     const transporter = nodemailer.createTransport({
-        service: "gmail",
+        host: "smtp.gmail.com",
+        port: 587, // Use 587 instead of 465
+        secure: false, // Must be false for port 587
         auth: {
-            user: process.env.APP_EMAIL_ADDRESS, // Sender's email
-            pass: process.env.APP_EMAIL_PASS, // App password
+            user: process.env.APP_EMAIL_ADDRESS,
+            pass: process.env.APP_EMAIL_PASS,
         },
+        tls: {
+            rejectUnauthorized: false, // Bypass SSL issues
+        }
     });
+    
 
     let Tmails = [];
 
