@@ -30,7 +30,7 @@ function App() {
 
     try {
       setisLoading(true)
-      const response = await axios.post("http://localhost:8000/api/send-req", formData, {
+      const response = await axios.post("/api/send-req", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
 
