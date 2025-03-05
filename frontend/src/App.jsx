@@ -14,21 +14,22 @@ function App() {
 
 
 
-  const handleUpload = async (email) => {
+const handleUpload = async ({email,subject}) => {
     if (!file) {
       alert("Please select an Excel file!");
       return;
     }
-    if (!email) {
-      alert("Please add an email!");
+    if (!email||!subject) {
+      alert("Please add an email and subject!");
       return;
     }
 
     const formData = new FormData();
     formData.append("excelFile", file);
     formData.append("email", email);
+    formData.append("subject", subject);
 
-    try {
+    try { 
       setisLoading(true)
       const response = await axios.post("/api/send-req", formData, {
         headers: { "Content-Type": "multipart/form-data" },
