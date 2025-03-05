@@ -73,17 +73,55 @@ const sendEmails = async (users, emailTemplate, subject) => {
 
     // Static email footer/signature
     const staticPart = `
-        <hr>
-        <p><strong>IEEE El Shorouk Academy Student Branch</strong></p>
-        <p>Nonprofit Organization | Cairo, Egypt 11837</p>
-        <p>Contact: <a href="mailto:ieee.sha.sb@gmail.com">ieee.sha.sb@gmail.com</a></p>
-        <p>
-            Follow us: 
-            <a href="https://www.facebook.com/IEEE.ElShoroukAcademy.SB/">Facebook</a> |
-            <a href="https://www.linkedin.com/company/10977911/">LinkedIn</a> |
-            <a href="https://www.instagram.com/ieee.sha.sb/">Instagram</a>
-        </p>
-    `;
+    <table>
+        <tbody>
+            <tr>
+                <!-- Left part (Logo) -->
+                <td style="padding-right: 15px;">
+                    <p dir="ltr">
+                        <img class="CToWUd a6T" tabindex="0" 
+                             src="https://lh4.googleusercontent.com/-Esrvsr7gZa9Y8E-6yrov9kY4XIDKrQWljMUDrJQt_MtpxVpz9XORLHAEx1ICkNj3z-lnwf2ECCih96pJIKdd62SoyiYp6hCyFMWSEXq4IUd50Vb8sMwE9pGtIgQGTlXqK7GPzx8" 
+                             alt="IEEE Logo" 
+                             width="202" height="201" crossorigin="" data-bit="iit">
+                    </p>
+                </td>
+
+                <!-- Vertical Line -->
+                <td style="border-left: 2px solid #000; padding: 0 15px;"></td>
+
+                <!-- Right part (Text & Contact Info) -->
+                <td style="padding-left: 15px;">
+                    <p dir="ltr"><strong>IEEE El Shorouk Academy Student Branch</strong></p>
+                    <p dir="ltr" >Nonprofit Organization</p>
+                    
+                    <p><strong>Chairman: Kareem Raafat</strong></p>
+                    <p><strong>Vice-Chairman: Suhaila Essam</strong></p>
+                    <p><strong>Treasurer: Abdallah Darwesh</strong></p>
+                    <p>HR Department:<br><a href="mailto:ieee.sha.sb@gmail.com">ieee.sha.hr@gmail.com</a></p>
+                    <p>Branch Mail:<br><a href="mailto:ieee.sha.sb@gmail.com">ieee.sha.09@gmail.com</a></p>
+                    <p>El-Shorouk City, Palms District</p>
+                    <p>Cairo, Egypt 11837</p>
+                    <br>
+                    <!-- Social Media Icons -->
+                    <p dir="ltr">
+                        <a href="https://www.facebook.com/IEEE.ElShoroukAcademy.SB/?fref=ts" target="_blank" rel="noopener">
+                            <img class="CToWUd" src="https://lh6.googleusercontent.com/v6Z30Wl9ThHW1dYqTe0FCPOVhI0GiBmu6gER9PVpdwO-auJvwjseyMe55QTqWlZ1kiN1a9pp6M1UsoCfvSJq9Y2t6eB3M0Oax-fKGRlNMEFFsiwqFRZ3M-jeojpM8mcBh9TGxMyi" 
+                                 alt="facebook.png" width="38" height="38">
+                        </a>
+                        <a href="https://www.linkedin.com/company/10977911/" target="_blank" rel="noopener">
+                            <img class="CToWUd" src="https://lh3.googleusercontent.com/Ic6yKDDjLV5-1c3J7tQw972e-tqPiKujCAc-NC6pLp1Nxs6T_GveBBRXi5YeuA9yvqY4AiLNOZjqW99A3VKn5icFZoNXr4ZndR0kbWgb8Z3Nbm-7_4lFRGJGR81JD8WcELAInZoO" 
+                                 alt="linkedin.png" width="38" height="38">
+                        </a>
+                        <a href="https://www.instagram.com/ieee.sha.sb/" target="_blank" rel="noopener">
+                            <img class="CToWUd" src="https://lh5.googleusercontent.com/UAv0ESo3nkasL3O-_rJ5k1eSSSODtDzGliL9VW9JaVzcteQg2i2WEC7OM1xKum7-1PIHIgty2EZXD01k8j0jxWEJfjemguPS-MqZDcTOHkpmEoJtRLGVPLdZSrCsi6j0sGjNOCNa" 
+                                 alt="instagram.png" width="38" height="38">
+                        </a>
+                    </p>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+`;
 
     for (const user of users) {
         let retries = 3; // Retry sending email up to 3 times
