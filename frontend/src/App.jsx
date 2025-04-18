@@ -7,6 +7,7 @@ import axios from 'axios'
 import PopUp from './components/PopUp'
 
 import ex from './ex.png'
+import Footer from './components/Footer'
 
 function App() {
   const [isLoading, setisLoading] = useState()
@@ -151,6 +152,7 @@ function App() {
 
 
       </div>
+      <Footer />
     </div>
   )
 }
