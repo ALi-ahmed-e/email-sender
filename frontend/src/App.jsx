@@ -4,22 +4,23 @@ import EmailsTable from './components/EmailsTable'
 import TExtArea from './components/TextArea'
 import FileInp from './components/FileInp'
 import axios from 'axios'
+import PopUp from './components/PopUp'
 
 function App() {
   const [isLoading, setisLoading] = useState()
   const [file, setfile] = useState()
-
+  const [shoppopup, setshoppopup] = useState(false)
   const [mails, setmails] = useState([])
 
 
 
 
-const handleUpload = async ({email,subject}) => {
+  const handleUpload = async ({ email, subject }) => {
     if (!file) {
       alert("Please select an Excel file!");
       return;
     }
-    if (!email||!subject) {
+    if (!email || !subject) {
       alert("Please add an email and subject!");
       return;
     }
@@ -29,7 +30,7 @@ const handleUpload = async ({email,subject}) => {
     formData.append("email", email);
     formData.append("subject", subject);
 
-    try { 
+    try {
       setisLoading(true)
       const response = await axios.post("/api/send-req", formData, {
         headers: { "Content-Type": "multipart/form-data" },
@@ -91,12 +92,18 @@ const handleUpload = async ({email,subject}) => {
 
 
 
-        {mails.length >0&& <div className="relative overflow-x-auto shadow-md sm:rounded-lg border-2 border-blue-800 bg-blue-800">
+        {mails.length > 0 && <div className="relative overflow-x-auto shadow-md sm:rounded-lg border-2 border-blue-800 bg-blue-800">
           <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
             <thead className="text-xs text-gray-700 uppercase dark:text-gray-400">
               <tr>
                 <th scope="col" className="px-6 py-3 bg-gray-50 dark:bg-gray-800">
+                  Name
+                </th>
+                <th scope="col" className="px-6 py-3 bg-gray-50 dark:bg-gray-800">
                   Email
+                </th>
+                <th scope="col" className="px-6 py-3 bg-gray-50 dark:bg-gray-800">
+                  Email text
                 </th>
                 <th scope="col" className="px-6 py-3 text-white">
                   State
@@ -104,12 +111,25 @@ const handleUpload = async ({email,subject}) => {
               </tr>
             </thead>
             <tbody>
-              {mails?.map(e => <tr  key={Math.random()} className="border-b border-gray-200 dark:border-gray-700">
+              {mails?.map(e => <tr key={Math.random()} className="border-b border-gray-200 dark:border-gray-700">
+                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                  {e.name}
+                </th>
                 <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
                   {e.email}
                 </th>
+                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                  <button onClick={() => setshoppopup(e.personalizedEmail)}>show</button>
+                  {shoppopup&&<PopUp setshoppopup={setshoppopup} text={shoppopup!= false?shoppopup
+                    .replace(/<img[^>]*>/g, '') // Remove <img> tags
+                    .replace(/<a[^>]*>(.*?)<\/a>/g, '$1') // Remove <a> tags but keep the text
+                    .replace(/<[^>]+>/g, '') // Remove all other HTML tags
+                    .replace(/\s+/g, ' ') // Replace multiple spaces with a single space
+                    :"email not sent"
+                  } />}
+                </th>
                 <td className="px-6 py-4  text-white">
-                  {e.state?'SENT':'FAILED'}
+                  {e.state ? 'SENT' : 'FAILED'}
                 </td>
               </tr>)}
             </tbody>

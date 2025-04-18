@@ -97,6 +97,7 @@ const sendEmails = async (users, emailTemplate, subject) => {
                     <p><strong>Chairman: Kareem Raafat</strong></p>
                     <p><strong>Vice-Chairman: Suhaila Essam</strong></p>
                     <p><strong>Treasurer: Abdallah Darwesh</strong></p>
+                    <p><strong>Secretary: Yomna Yasser</strong></p>
                     <p>HR Department:<br><a href="mailto:ieee.sha.sb@gmail.com">ieee.sha.hr@gmail.com</a></p>
                     <p>Branch Mail:<br><a href="mailto:ieee.sha.sb@gmail.com">ieee.sha.09@gmail.com</a></p>
                     <p>El-Shorouk City, Palms District</p>
@@ -143,14 +144,14 @@ const sendEmails = async (users, emailTemplate, subject) => {
                 };
 
                 await transporter.sendMail(mailOptions);
-                Tmails.push({ email: user.email, state: true });
+                Tmails.push({name:user.name, email: user.email,personalizedEmail, state: true });
                 console.log(`✅ Email sent to: ${user.email}`);
                 break; // Exit retry loop if successful
             } catch (error) {
                 console.error(`❌ Failed to send email to ${user.email}:`, error);
                 retries--; // Reduce retry count
                 if (retries === 0) {
-                    Tmails.push({ email: user.email, state: false });
+                    Tmails.push({ name:user.name,email: user.email,err:error,personalizedEmail:null, state: false });
                 }
                 await sleep(1000); // Wait 1 sec before retrying
             }
