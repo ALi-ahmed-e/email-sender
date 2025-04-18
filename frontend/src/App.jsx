@@ -6,6 +6,8 @@ import FileInp from './components/FileInp'
 import axios from 'axios'
 import PopUp from './components/PopUp'
 
+import ex from './ex.png'
+
 function App() {
   const [isLoading, setisLoading] = useState()
   const [file, setfile] = useState()
@@ -81,6 +83,14 @@ function App() {
       <div className=' w-full p-20 dark:bg-gray-900  bg-gray-300' >
 
 
+        <div role="alert">
+          <div className="bg-red-500 text-white font-bold rounded-t px-4 py-2">
+            insure to keep all the columns names in lowercase and without spaces as it affects the data extraction
+          </div>
+          <div className="border border-t-0 border-red-400 rounded-b bg-red-100 px-4 py-3 text-red-700">
+          <img src={ex} alt="example" />
+          </div>
+        </div>
 
 
         <FileInp handlefile={handlefile} />
@@ -120,12 +130,12 @@ function App() {
                 </th>
                 <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
                   <button onClick={() => setshoppopup(e.personalizedEmail)}>show</button>
-                  {shoppopup&&<PopUp setshoppopup={setshoppopup} text={shoppopup!= false?shoppopup
+                  {shoppopup && <PopUp setshoppopup={setshoppopup} text={shoppopup != false ? shoppopup
                     .replace(/<img[^>]*>/g, '') // Remove <img> tags
                     .replace(/<a[^>]*>(.*?)<\/a>/g, '$1') // Remove <a> tags but keep the text
                     .replace(/<[^>]+>/g, '') // Remove all other HTML tags
                     .replace(/\s+/g, ' ') // Replace multiple spaces with a single space
-                    :"email not sent"
+                    : "email not sent"
                   } />}
                 </th>
                 <td className="px-6 py-4  text-white">
